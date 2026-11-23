@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Seleksi Karyawan</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="card">
+  <h1>Form Lamaran &amp; Seleksi Karyawan</h1>
+  <p class="sub">Isi data dengan benar. Tim HR akan menghubungi pelamar yang lolos seleksi berkas.</p>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <p class="alert {{ category }}">{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+
+  <form action="/daftar" method="post">
+    <label>Nama Lengkap *
+      <input type="text" name="nama" required placeholder="cth: Harits Pratama">
+    </label>
+
+    <label>Email *
+      <input type="email" name="email" required placeholder="nama@email.com">
+    </label>
+
+    <label>Nomor HP / WhatsApp *
+      <input type="tel" name="hp" required placeholder="0812xxxxxxx">
+    </label>
+
+    <label>Posisi yang Dilamar *
+      <select name="posisi" required>
+        <option value="">-- Pilih Posisi --</option>
+        {% for p in posisi_list %}
+        <option value="{{ p }}">{{ p }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Pendidikan Terakhir *
+      <select name="pendidikan" required>
+        <option value="">-- Pilih --</option>
+        <option>SMA/SMK</option>
+        <option>D3</option>
+        <option>S1</option>
+        <option>S2</option>
+      </select>
+    </label>
+
+    <label>Pengalaman Kerja (tahun)
+      <input type="number" name="pengalaman" min="0" value="0">
+    </label>
+
+    <label>Keahlian
+      <textarea name="keahlian" rows="3" placeholder="cth: Cisco Packet Tracer, Python, jaringan dasar"></textarea>
+    </label>
+
+    <label>Motivasi Melamar
+      <textarea name="motivasi" rows="4" placeholder="Ceritakan singkat kenapa kamu cocok untuk posisi ini..."></textarea>
+    </label>
+
+    <button type="submit">Kirim Lamaran</button>
+  </form>
+
+  <p class="foot">HR? Lihat daftar pelamar di <a href="/admin">Dashboard Admin</a></p>
+</main>
+</body>
+</html>
